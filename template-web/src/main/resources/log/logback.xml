@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="logRoot" value="/data/logs/java/template" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- %.-1level 只显示信息级别的首字母,%-5level 左对齐显示信息级别全称 -->
+            <!-- 如需自定义关键字，用 %mdc{键名} 表示,程序中用MDC.put("键名","键值")设置，可动态设置 [%logger:%line]-->
+            <Pattern>[%date{HH:mm:ss}] [%-5level] --%mdc{client} %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="detail" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logRoot}/dlog.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logRoot}/dlog.log-%d{yyyy-MM-dd}</FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- %-40(%-35logger{35}:%-4line) -->
+            <Pattern>[%date{yyyy-MM-dd HH:mm:ss}] [%-5level] [%logger:%line] --%mdc{client} %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logRoot}/elog.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logRoot}/elog.log-%d{yyyy-MM-dd}</FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- %-40(%-35logger{35}:%-4line) -->
+            <Pattern>[%date{yyyy-MM-dd HH:mm:ss}] [%-5level] [%logger:%line] --%mdc{client} %msg%n</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+              <level>ERROR</level>
+              <onMatch>ACCEPT</onMatch>
+              <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+	<appender name="profilerPersistent"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/data/logs/java/profiler/profiler.template.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>/data/logs/java/profiler/profiler.template.log.%i
+			</FileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>3</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>100MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<Pattern>%msg%n</Pattern>
+		</encoder>
+	</appender>
+<!--	<appender name="asyncProfilerPersistent" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>512</queueSize>
+		<appender-ref ref="profilerPersistent" />
+	</appender>-->
+
+    <logger name="dada.profiler.log.persistent" level="info" additivity="false">
+	<appender-ref ref="profilerPersistent" />
+    </logger>
+    <logger name="com.hogo.template" level="DEBUG"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="java.sql.Connection" level="DEBUG"/>
+    <logger name="java.sql.ResultSet" level="INFO"/>
+    <root level="TRACE">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="detail"/>
+        <appender-ref ref="error"/>
+    </root>
+</configuration>

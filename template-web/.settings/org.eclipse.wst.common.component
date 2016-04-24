@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="template-web">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="template-service-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/template-service/template-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="template-dao-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/template-dao/template-dao">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="template-rpc-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/template-rpc/template-rpc">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="template-model-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/template-model/template-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="template-common-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/template-common/template-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="template-web"/>
+        <property name="java-output-path" value="/template-web/target/classes"/>
+    </wb-module>
+</project-modules>
